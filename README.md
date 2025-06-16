@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/c60219e3-3185-4d26-98dc-c293a4f7b978)# 📚 StudySync - Smart Study Dashboard
+ # 📚 StudySync - Smart Study Dashboard
 
 StudySync is a full-stack study dashboard built with **React**, **Tailwind CSS**, and **Node.js/Express**, designed to help students stay focused, track their goals, and monitor study time efficiently.
 
