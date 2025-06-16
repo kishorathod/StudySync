@@ -52,10 +52,10 @@ const Dashboard = () => {
     const fetchDashboardData = async () => {
       try {
         const [subjectRes, sessionRes] = await Promise.all([
-          axios.get("http://localhost:5000/api/subjects", {
+          axios.get("https://studysync-y3im.onrender.com/api/subjects", {
             headers: { "x-auth-token": token },
           }),
-          axios.get("http://localhost:5000/api/sessions", {
+          axios.get("https://studysync-y3im.onrender.com/api/sessions", {
             headers: { "x-auth-token": token },
           }),
         ]);
@@ -96,7 +96,7 @@ const Dashboard = () => {
     try {
       if (editSubjectId) {
         await axios.put(
-          `http://localhost:5000/api/subjects/${editSubjectId}`,
+          `https://studysync-y3im.onrender.com/api/subjects/${editSubjectId}`,
           newSubject,
           {
             headers: { "x-auth-token": token },
@@ -104,14 +104,14 @@ const Dashboard = () => {
         );
         toast.success("Subject updated!");
       } else {
-        await axios.post("http://localhost:5000/api/subjects", newSubject, {
+        await axios.post("https://studysync-y3im.onrender.com/api/subjects", newSubject, {
           headers: { "x-auth-token": token },
         });
         toast.success("Subject added!");
       }
       setNewSubject({ name: "", goalHours: "" });
       setEditSubjectId(null);
-      const res = await axios.get("http://localhost:5000/api/subjects", {
+      const res = await axios.get("https://studysync-y3im.onrender.com/api/subjects", {
         headers: { "x-auth-token": token },
       });
       setSubjects(res.data);
@@ -124,11 +124,11 @@ const Dashboard = () => {
     if (!window.confirm("Are you sure you want to delete this subject?"))
       return;
     try {
-      await axios.delete(`http://localhost:5000/api/subjects/${id}`, {
+      await axios.delete(`https://studysync-y3im.onrender.com/api/subjects/${id}`, {
         headers: { "x-auth-token": token },
       });
       toast.success("Subject deleted.");
-      const res = await axios.get("http://localhost:5000/api/subjects", {
+      const res = await axios.get("https://studysync-y3im.onrender.com/api/subjects", {
         headers: { "x-auth-token": token },
       });
       setSubjects(res.data);
@@ -144,12 +144,12 @@ const Dashboard = () => {
       return;
     }
     try {
-      await axios.post("http://localhost:5000/api/sessions", form, {
+      await axios.post("https://studysync-y3im.onrender.com/api/sessions", form, {
         headers: { "x-auth-token": token },
       });
       toast.success("Session added!");
       setForm({ subjectId: subjects[0]?._id || "", duration: "", notes: "" });
-      const res = await axios.get("http://localhost:5000/api/sessions", {
+      const res = await axios.get("https://studysync-y3im.onrender.com/api/sessions", {
         headers: { "x-auth-token": token },
       });
       setSessions(res.data);
@@ -162,11 +162,11 @@ const Dashboard = () => {
     if (!window.confirm("Are you sure you want to delete this session?"))
       return;
     try {
-      await axios.delete(`http://localhost:5000/api/sessions/${id}`, {
+      await axios.delete(`https://studysync-y3im.onrender.com/api/sessions/${id}`, {
         headers: { "x-auth-token": token },
       });
       toast.success("Session deleted.");
-      const res = await axios.get("http://localhost:5000/api/sessions", {
+      const res = await axios.get("https://studysync-y3im.onrender.com/api/sessions", {
         headers: { "x-auth-token": token },
       });
       setSessions(res.data);

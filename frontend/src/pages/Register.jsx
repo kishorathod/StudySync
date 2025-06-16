@@ -19,7 +19,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/register", formData);
+      const res = await axios.post("https://studysync-y3im.onrender.com/api/auth/register", formData);
       login(res.data.token);
       toast.success("Registration successful!");
       navigate("/dashboard");

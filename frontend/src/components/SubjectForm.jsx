@@ -12,7 +12,7 @@ const SubjectForm = ({ fetchSubjects }) => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/subjects', {
+      await axios.post('https://studysync-y3im.onrender.com', {
         name,
         goalHours: parseInt(goalHours)
       }, {
