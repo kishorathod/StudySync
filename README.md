@@ -26,10 +26,17 @@ StudySync is a full-stack study dashboard built with **React**, **Tailwind CSS**
 ---
 
 Project Screenshots: 
-
-![image](https://github.com/user-attachments/assets/3e6d7905-1096-49cc-81d7-1061a4a664ac)
-
-![image](https://github.com/user-attachments/assets/598431d1-129b-4cd1-b26d-8c8462eefc04)
-
  
+
+
+ ![image](https://github.com/user-attachments/assets/b14961a5-0bf9-424a-b827-533542fb37d3)
+
+
+![image](https://github.com/user-attachments/assets/da9fab8e-5f7a-4478-bf9b-ad7db7eacb95)
+
+
+![image](https://github.com/user-attachments/assets/5901fc71-eac4-4958-bf0d-cc2f6c4e2588)
+
+
+![image](https://github.com/user-attachments/assets/2340fa04-05d3-42ef-9c2c-31d54708f114)
 
