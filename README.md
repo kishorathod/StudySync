@@ -25,27 +25,7 @@ StudySync is a full-stack study dashboard built with **React**, **Tailwind CSS**
 
 ---
 
-## 🛠️ Setup Instructions
-
-```bash
-# Clone the repository
-git clone https://github.com/kishorathod/StudySync.git
-cd StudySync
-
-# Backend setup
-cd backend
-npm install
-# Add a .env file with the following:
-# JWT_SECRET=your_secret_key
-# MONGO_URI=your_mongo_uri
-# PORT=5000
-npm start
-
-# Frontend setup
-cd ../frontend
-npm install
-npm start
-
+ 
 
  
  
