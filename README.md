@@ -47,9 +47,6 @@ npm install
 npm start
 
 
-Project Screenshots: 
-![image](https://github.com/user-attachments/assets/330dc429-441c-43fa-a696-0b8779aa988b)
-![image](https://github.com/user-attachments/assets/0a495789-daaf-483b-b3fa-2a5d479861cc)
-
-![image](https://github.com/user-attachments/assets/fd931d8f-9b97-4768-9ed5-2d7abef41b9a)
+ 
+ 
 
