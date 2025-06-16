@@ -1,37 +1,37 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import { jwtDecode } from 'jwt-decode'; // ✅ Correct named import
+import { createContext, useContext, useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem('token'));
-  const [user, setUser] = useState(() => {
-    const storedToken = localStorage.getItem('token');
-    if (storedToken) {
-      try {
-        return jwtDecode(storedToken); // ✅ Use jwtDecode (not jwt_decode)
-      } catch (err) {
-        console.error("Invalid token", err);
-        return null;
-      }
-    }
-    return null;
-  });
+  const [token, setToken] = useState(() => localStorage.getItem("token") || null);
+  const [user, setUser] = useState(null);
 
-  const login = (newToken) => {
-    localStorage.setItem('token', newToken);
-    setToken(newToken);
+useEffect(() => {
+  console.log("🔄 useEffect triggered - token is:", token);
+
+  if (token) {
     try {
-      const decoded = jwtDecode(newToken); // ✅ Use jwtDecode
-      console.log("Decoded Token:", decoded); // 👈 Add this line
+      const decoded = jwtDecode(token);
+      console.log("✅ Decoded token:", decoded);
       setUser(decoded);
     } catch (err) {
-      console.error("Invalid token", err);
+      console.error("❌ Error decoding token:", err);
+      setUser(null);
     }
+  } else {
+    setUser(null);
+  }
+}, [token]);
+
+
+  const login = (newToken) => {
+    localStorage.setItem("token", newToken);
+    setToken(newToken); // this will trigger useEffect to decode
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     setToken(null);
     setUser(null);
   };

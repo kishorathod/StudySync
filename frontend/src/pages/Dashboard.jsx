@@ -19,8 +19,22 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+// ✅ ICONS
+import {
+  FaSun,
+  FaMoon,
+  FaBrain,
+  FaBullseye,
+  FaEdit,
+  FaTrash,
+  FaSearch,
+  FaChartBar,
+  FaChartLine,
+} from "react-icons/fa";
+import { MdOutlineAddCircle } from "react-icons/md";
+
 const Dashboard = () => {
-  const { token, user, logout } = useAuth(); // ⬅️ Updated here
+  const { token, user, logout } = useAuth();
   const [subjects, setSubjects] = useState([]);
   const [sessions, setSessions] = useState([]);
   const [themeDark, setThemeDark] = useState(
@@ -35,7 +49,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (!token) return;
-
     const fetchDashboardData = async () => {
       try {
         const [subjectRes, sessionRes] = await Promise.all([
@@ -46,10 +59,8 @@ const Dashboard = () => {
             headers: { "x-auth-token": token },
           }),
         ]);
-
         setSubjects(subjectRes.data);
         setSessions(sessionRes.data);
-
         if (subjectRes.data.length && !form.subjectId) {
           setForm((prev) => ({ ...prev, subjectId: subjectRes.data[0]._id }));
         }
@@ -57,7 +68,6 @@ const Dashboard = () => {
         console.error("Dashboard load error:", err);
       }
     };
-
     fetchDashboardData();
   }, [token]);
 
@@ -74,7 +84,6 @@ const Dashboard = () => {
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
-
   const handleSubjectChange = (e) =>
     setNewSubject({ ...newSubject, [e.target.name]: e.target.value });
 
@@ -89,7 +98,9 @@ const Dashboard = () => {
         await axios.put(
           `http://localhost:5000/api/subjects/${editSubjectId}`,
           newSubject,
-          { headers: { "x-auth-token": token } }
+          {
+            headers: { "x-auth-token": token },
+          }
         );
         toast.success("Subject updated!");
       } else {
@@ -110,7 +121,8 @@ const Dashboard = () => {
   };
 
   const handleDeleteSubject = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this subject?")) return;
+    if (!window.confirm("Are you sure you want to delete this subject?"))
+      return;
     try {
       await axios.delete(`http://localhost:5000/api/subjects/${id}`, {
         headers: { "x-auth-token": token },
@@ -147,7 +159,8 @@ const Dashboard = () => {
   };
 
   const handleDeleteSession = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this session?")) return;
+    if (!window.confirm("Are you sure you want to delete this session?"))
+      return;
     try {
       await axios.delete(`http://localhost:5000/api/sessions/${id}`, {
         headers: { "x-auth-token": token },
@@ -175,7 +188,10 @@ const Dashboard = () => {
         : new Date(b.date) - new Date(a.date)
     );
 
-  const totalStudyTime = sessions.reduce((sum, s) => sum + (s.duration || 0), 0);
+  const totalStudyTime = sessions.reduce(
+    (sum, s) => sum + (s.duration || 0),
+    0
+  );
 
   const barChartData = subjects.map((sub) => {
     const total = sessions
@@ -194,23 +210,43 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <div className="header-container flex items-center justify-between flex-wrap">
+      <div className="header-container">
         <h1 className="header-title">📚 Study Dashboard</h1>
         <div className="flex gap-4 items-center">
           <button onClick={toggleTheme} className="toggle-theme-btn">
-            {themeDark ? "☀️ Light Mode" : "🌙 Dark Mode"}
+            {themeDark ? <FaSun /> : <FaMoon />} {themeDark ? "Light" : "Dark"}{" "}
+            Mode
           </button>
-          {/* ⬇️ Added UserProfileCard */}
-          <UserProfileCard user={user} onLogout={logout} />
+          <UserProfileCard />
         </div>
       </div>
 
-      <p className="total-study-time">⏱️ Total Study Time: {totalStudyTime} mins</p>
- <div className="grid md:grid-cols-3 gap-4 mb-6">
+      <h2 className="total-study-time">
+        <FaBrain /> Total Study Time: {totalStudyTime} mins
+      </h2>
+
+      {/* Achievements */}
+      <div className="mb-6 text-lg font-semibold achievement-badge">
+        🏅 Achievement:{" "}
+        {totalStudyTime >= 1500
+          ? "🏆 Legend (1500+ mins)"
+          : totalStudyTime >= 1000
+          ? "🥇 Gold (1000+ mins)"
+          : totalStudyTime >= 750
+          ? "🥈 Silver (750+ mins)"
+          : totalStudyTime >= 500
+          ? "🥉 Bronze (500+ mins)"
+          : "Keep going! 💪"}
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-4 mb-6">
         {subjects.map((subj) => (
           <div key={subj._id} className="subject-card">
             <h2 className="subject-title">{subj.name}</h2>
-            <p>🎯 Goal: {subj.goalHours} hrs</p>
+            <p>
+              <FaBullseye className="inline-block mr-1" /> Goal:{" "}
+              {subj.goalHours} hrs
+            </p>
             <div className="subject-actions">
               <button
                 className="btn-edit"
@@ -219,13 +255,13 @@ const Dashboard = () => {
                   setNewSubject({ name: subj.name, goalHours: subj.goalHours });
                 }}
               >
-                Edit
+                <FaEdit className="inline mr-1" /> Edit
               </button>
               <button
                 className="btn-delete"
                 onClick={() => handleDeleteSubject(subj._id)}
               >
-                Delete
+                <FaTrash className="inline mr-1" /> Delete
               </button>
             </div>
           </div>
@@ -250,6 +286,7 @@ const Dashboard = () => {
           className="form-input"
         />
         <button className="btn-submit">
+          <MdOutlineAddCircle className="inline mr-1" />
           {editSubjectId ? "Update Subject" : "Add Subject"}
         </button>
       </form>
@@ -284,7 +321,9 @@ const Dashboard = () => {
           onChange={handleChange}
           className="form-input"
         />
-        <button className="btn-session">Add Session</button>
+        <button className="btn-session">
+          <MdOutlineAddCircle className="inline mr-1" /> Add Session
+        </button>
       </form>
 
       <div className="filter-container">
@@ -302,7 +341,7 @@ const Dashboard = () => {
         </select>
         <input
           type="text"
-          placeholder="🔍 Search notes"
+          placeholder="Search notes"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="form-input"
@@ -326,7 +365,8 @@ const Dashboard = () => {
                 <p>⏱️ {session.duration} mins</p>
                 {session.notes && <p>📝 {session.notes}</p>}
                 <p className="session-date">
-                  📅 {new Date(session.date).toLocaleString("en-IN", {
+                  📅{" "}
+                  {new Date(session.date).toLocaleString("en-IN", {
                     timeZone: "Asia/Kolkata",
                     day: "2-digit",
                     month: "2-digit",
@@ -341,17 +381,17 @@ const Dashboard = () => {
                 onClick={() => handleDeleteSession(session._id)}
                 className="text-red-600 hover:text-red-800 text-xl ml-4"
               >
-                🗑️
+                <FaTrash />
               </button>
             </div>
           </div>
         ))}
       </div>
 
-      <h2 className="text-xl font-semibold mt-10 mb-2">
-        📊 Study Time by Subject
+      <h2 className="chart-heading mt-16">
+        <FaChartBar className="inline mr-2" /> Study Time by Subject
       </h2>
-      <div className="bg-white dark:bg-gray-800 p-4 rounded shadow mb-8">
+      <div className="chart-section">
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={barChartData}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -364,10 +404,10 @@ const Dashboard = () => {
         </ResponsiveContainer>
       </div>
 
-      <h2 className="text-xl font-semibold mt-10 mb-2">
-        📈 Study Time Over Time
+      <h2 className="chart-heading mt-10">
+        <FaChartLine className="inline mr-2" /> Study Time Over Time
       </h2>
-      <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
+      <div className="chart-section">
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={lineChartData}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -389,5 +429,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-

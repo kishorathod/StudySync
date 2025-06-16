@@ -3,33 +3,55 @@
 @tailwind utilities;
 
 @layer components {
+  /* === Layout Containers === */
   .dashboard-container {
-    @apply min-h-screen p-6 bg-gray-50 text-black dark:bg-gray-900 dark:text-white;
+    @apply min-h-screen p-6 bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-white;
   }
 
   .header-container {
     @apply flex justify-between items-center mb-6 flex-wrap gap-2;
   }
 
+  /* === Typography === */
   .header-title {
-    @apply text-2xl font-bold tracking-wide;
-  }
-
-  .toggle-theme-btn {
-    @apply bg-black text-white px-4 py-2 rounded hover:opacity-90 transition duration-200;
+    @apply text-4xl font-extrabold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text drop-shadow-md;
   }
 
   .total-study-time {
-    @apply text-lg font-semibold mb-6;
+    @apply text-2xl font-bold mb-6 flex items-center gap-2 text-gray-900 dark:text-white;
   }
 
+  /* === Theme & Filter Buttons === */
+  .toggle-theme-btn {
+    @apply bg-black text-white px-4 py-2 rounded hover:opacity-90 transition duration-200 whitespace-nowrap;
+  }
+
+  .filter-container {
+    @apply flex flex-wrap gap-4 mb-6;
+  }
+
+  /* === Reusable Utilities === */
+  .btn {
+    @apply text-white px-4 py-2 rounded-md font-medium transition duration-200;
+  }
+
+  .card {
+    @apply bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-300 dark:border-gray-700 shadow transition duration-200;
+  }
+
+  .form-field {
+    @apply p-2 border border-gray-300 rounded-md text-gray-900 dark:text-white 
+           dark:bg-gray-800 dark:border-gray-600 
+           focus:outline-none focus:ring-2 focus:ring-blue-400;
+  }
+
+  /* === Subject Section === */
   .subject-card {
-    @apply bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 
-           p-4 rounded-xl shadow hover:shadow-lg transition duration-200;
+    @apply card hover:shadow-lg;
   }
 
   .subject-title {
-    @apply text-xl font-semibold mb-1;
+    @apply text-xl font-semibold mb-1 text-gray-900 dark:text-white;
   }
 
   .subject-actions {
@@ -37,13 +59,27 @@
   }
 
   .btn-edit {
-    @apply bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded transition duration-200;
+    @apply btn bg-blue-500 hover:bg-blue-600;
   }
 
   .btn-delete {
-    @apply bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded transition duration-200;
+    @apply btn bg-rose-500 hover:bg-rose-600;
   }
 
+  /* === Session Section === */
+  .session-card {
+    @apply card hover:shadow-md;
+  }
+
+  .session-title {
+    @apply text-lg font-semibold text-gray-900 dark:text-white;
+  }
+
+  .session-date {
+    @apply text-sm text-gray-500 dark:text-gray-400;
+  }
+
+  /* === Forms === */
   .subject-form,
   .session-form {
     @apply grid gap-4 mb-10;
@@ -59,55 +95,37 @@
 
   .form-input,
   .form-select {
-    @apply p-2 border border-gray-300 rounded text-black dark:text-white 
-           dark:bg-gray-800 dark:border-gray-600 
-           focus:outline-none focus:ring-2 focus:ring-blue-400;
+    @apply form-field;
   }
 
-  .btn-submit {
-    @apply bg-green-600 hover:bg-green-700 text-white p-2 rounded transition duration-200;
-  }
-
+  .btn-submit,
   .btn-session {
-    @apply bg-blue-500 hover:bg-blue-600 text-white p-2 rounded transition duration-200;
+    @apply btn bg-blue-500 hover:bg-blue-600;
   }
 
-  .filter-container {
-    @apply flex flex-wrap gap-4 mb-6;
-  }
-
-  .session-card {
-    @apply bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-300 
-           dark:border-gray-700 shadow-sm hover:shadow-md transition duration-200;
-  }
-
-  .session-title {
-    @apply text-lg font-semibold;
-  }
-
-  .session-date {
-    @apply text-sm text-gray-500 dark:text-gray-400;
-  }
-
+  /* === Chart Section === */
   .chart-section {
-    @apply bg-white dark:bg-gray-800 p-4 rounded-xl shadow border border-gray-200 
-           dark:border-gray-700 mb-10;
+    @apply card mb-10;
   }
 
   .chart-heading {
-    @apply text-xl font-semibold mb-3;
+    @apply text-xl font-semibold mb-3 text-gray-900 dark:text-white;
   }
-}
 
+  /* === Logout === */
+  .btn-logout {
+    @apply btn bg-red-500 hover:bg-red-600;
+  }
 
-.btn-logout {
-  background-color: #ef4444;
-  color: white;
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.375rem;
-  font-weight: 500;
-  transition: background-color 0.2s;
-}
-.btn-logout:hover {
-  background-color: #dc2626;
+  .achievement-badge {
+    @apply mb-6 text-lg font-semibold text-yellow-500 dark:text-yellow-300;
+  }
+
+  /* === Accessibility Enhancements === */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
 }
