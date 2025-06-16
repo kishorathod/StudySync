@@ -1,14 +1,21 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const app = express();
 
-// Middlewares
-app.use(cors());
-app.use(express.json());
+// ✅ CORS options
+const corsOptions = {
+  origin: 'https://study-sync-ismn.vercel.app', // your deployed frontend on Vercel
+  credentials: true, // allow cookies and headers like Authorization
+};
 
+// Middlewares
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(cookieParser()); // required if using cookies
 
 // Environment
 const PORT = process.env.PORT || 5000;
@@ -40,16 +47,11 @@ app.get('/', (req, res) => {
   res.send('📚 Study Tracker API is running...');
 });
 
+// Error handler (must be last)
+const errorHandler = require('./middleware/errorHandler');
+app.use(errorHandler);
+
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
-
-
-// Error handling all at one place 
-
-const errorHandler = require('./middleware/errorHandler');
-
-
-// ⬇️ Error handler should come LAST
-app.use(errorHandler);
